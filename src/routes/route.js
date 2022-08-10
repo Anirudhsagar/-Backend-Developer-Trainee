@@ -70,4 +70,124 @@ router.post("/test-post-4", function(req, res) {
     res.send(  { msg: arr , status: true }  )
 })
 
+router.post("/sagar", function(req,res){
+
+    res.send ( {"name": "Anirudh", "age": 22, "girlfriend": null })
+    console.log(req.body)
+})
+
+
+
+// Your player collection should be an ARRAY of player objects. Each player object should have the following attributes:
+
+// e.g. the players array would look like this:
+     let players =
+   [
+       {
+           "name": "manish",
+           "dob": "1/1/1995",
+           "gender": "male",
+           "city": "jalandhar",
+           "sports": [
+               "swimming"
+           ]
+       },
+       {
+           "name": "gopal",
+           "dob": "1/09/1995",
+           "gender": "male",
+           "city": "delhi",
+           "sports": [
+               "soccer"
+           ]
+       },
+       {
+           "name": "lokesh",
+           "dob": "1/1/1990",
+           "gender": "male",
+           "city": "mumbai",
+           "sports": [
+               "soccer"
+           ]
+       },
+   ]
+
+router.post("/sagar-api", function (req, res){
+
+    let id = req.body     
+    for (i =0; i<players.length; i++){
+        let newPlayer = players[i];   
+
+
+        if(id.name == newPlayer.name){
+            return res.send ("this player exist")
+        }
+    }
+    players.push(id)
+    res.send({ data:players, status:true})
+    
+    
+});
+
+
+
+// router.post("/playes-api", function (req, res){
+//     let element = req.body
+//     for(i = 0; i < players.length; i++){
+//         let sports = players[i]
+//         if (sports.name == element.name){
+//             return res.send("this player is exist")
+//         }
+//     }
+//     players.push(element)
+//     res.send({ data:players , status: true})
+// })
+
+
+// router.post("/player-api", function (req, res){
+//     let newPlayer = req.body.players
+//     for(i =0; i<players.length; i++){
+//         let newPlayer = players[i]
+//         if(newPlayer = players.newPlayer){
+//             return res.send("this player exist")
+//         }
+//     }
+//     players.push(newPlayer)
+//     res.send({ data:players , status:true })
+// })
+
+
+
+// // let players = []
+
+// router.post('/players', function (req, res) {
+    
+//     let newPlayer = req.body
+//     let newPlayersName = newPlayer.name
+//     let isNameRepeated = false
+
+//     //let player = players.find(p => p.name == newPlayersName)
+
+//     for(let i = 0; i < players.length; i++) {
+//         if(players[i].name == newPlayersName) {
+//             isNameRepeated = true;
+//             break;
+//         }
+//     }
+
+//     //undefined is same as false/ a falsy value
+//     if (isNameRepeated) {
+//         //Player exists
+//         res.send("This player was already added!")
+//     } else {
+//         //New entry
+//         players.push(newPlayer)
+//         res.send(players)
+//     }
+// });
+
+
+
+router.get("get")
+
 module.exports = router;
