@@ -7,6 +7,7 @@ const createUser = async function (req, res) {
   //the second parameter is always the response
   let data = req.body;
   let savedData = await userModel.create(data);
+  console.log(req.newAtribute);
   res.send({ msg: savedData });
 };
 
@@ -35,8 +36,8 @@ const loginUser = async function (req, res) {
     },
     "functionup-Plutonium"
   );
-  res.setHeader("x-auth-token", token);
-  res.send({ status: true, token: token });
+  // res.setHeader("x-auth-token", token);
+  res.send({ status: true, data: token });
 };
 
 const getUserData = async function (req, res) {

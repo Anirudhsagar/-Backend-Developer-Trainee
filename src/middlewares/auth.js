@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const jwtvalidation = async function (req, res,next) {
+const validateToken = async function (req, res,next) {
     let token = req.headers["x-Auth-token"];
     if (!token) token = req.headers["x-auth-token"];
   
@@ -18,9 +18,21 @@ const jwtvalidation = async function (req, res,next) {
     if (!decodedToken){
       return res.send({ status: false, msg: "Token is invalid" });
     }
-    let userid= req.params.userId
-    if (decodedToken.userId!==userid) return res.send({status: false,msg:"User ID or token is Wrong"})
-    else {next()}
+    let userId= req.params.userId
+    if(decodedToken.userId!==userId) return res.send({status: false, msg:"user id is wrong"})
+    else
+    req.loggedInUser = decodedToken.uerId
+    next()
 }
 
-module.exports.jwtvalidation=jwtvalidation;
+
+const checkIfAuthorized = function(req, res, next) {
+  let requestedUserId = req.params.userId 
+  if(requestedUserId !== req.loggedInUser) {
+    return res .send( {status: false, msg: "Permission denied"})
+  }
+  next()
+}
+
+module.exports.validateToken = validateToken;
+module.exports.checkIfAuthorized = checkIfAuthorized

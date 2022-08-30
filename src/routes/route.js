@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const userController= require("../controllers/userController")
-const jwtMW= require("../middlewares/auth")
+const userController= require("../controllers/userController");
+const {validateToken, checkIfAuthorized} = require("../middlewares/auth")
 
-router.post("/users", userController.createUser  )
+router.post("/users", userController.createUser  )     // this is a publuic api
 
-router.post("/login", userController.loginUser)
+router.post("/login", userController.loginUser)          // this is a public api 
 
-//The userId is sent by front end
-router.get("/users/:userId", jwtMW.jwtvalidation, userController.getUserData)        // jwtMW.jwtvalidation,
+//The userId is sent by front end            and this is authentication vs authorization api
 
-router.put("/users/:userId", jwtMW.jwtvalidation,  userController.updateUser)          // jwtMW.jwtvalidation,
+router.get("/users/:userId", validateToken, checkIfAuthorized, userController.getUserData)               //checkIfAuthorized,
 
-router.delete("/users/:userId", jwtMW.jwtvalidation,  userController.deleteUser)     // jwtMW.jwtvalidation,
+router.put("/users/:userId", validateToken, checkIfAuthorized, userController.updateUser)               //checkIfAuthorized,
+
+router.delete("/users/:userId", validateToken, checkIfAuthorized, userController.deleteUser)             //checkIfAuthorized,
 
 module.exports = router;
